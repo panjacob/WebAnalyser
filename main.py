@@ -96,7 +96,7 @@ def get_all_archives(start_str, end_str, site):
     dates = generate_dates_between(start, end)
     total = len(dates)
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
         futures = []
         for date in dates:
             futures.append(executor.submit(get_archive, date_str=date, site=site, site_dir=site_dir))
@@ -108,9 +108,9 @@ def get_all_archives(start_str, end_str, site):
                 bad += 1
             elif result == 2:
                 exist += 1
-            print("good: {}  bad: {}  exist: {}  {}/{} Czas: {}".format(good, bad, exist, good+bad+exist, total, (time.time() - threaded_start) / 60))
+            print("good: {}  bad: {}  exist: {}  {}/{} Czas: {}".format(good, bad, exist, good+bad+exist, total, round((time.time() - threaded_start)) / 60))
 
 
 threaded_start = time.time()
-get_all_archives('20190901', '20201229', 'pap.pl')
+get_all_archives('20010901', '20201229', 'pap.pl')
 print("Threaded time:", (time.time() - threaded_start) / 60)
