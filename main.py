@@ -5,6 +5,9 @@ import urllib3
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
+from bs4 import BeautifulSoup
+from bs4.element import Comment
+import urllib.request
 
 
 def get_link_to_archive(site, date_str):
@@ -19,9 +22,7 @@ def get_link_to_archive(site, date_str):
 
 
 def get_text_from_link(link):
-    from bs4 import BeautifulSoup
-    from bs4.element import Comment
-    import urllib.request
+
 
     def tag_visible(element):
         if element.parent.name in ['style', 'script', 'head', 'title', 'meta', '[document]']:
